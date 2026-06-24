@@ -16,7 +16,7 @@ namespace Kakky
         {
             ServiceLocator.Resolve<ITimerService>().StopTimer();
             ServiceLocator.Resolve<ICameraService>().ChangeCameraToGameClear();
-            await ServiceLocator.Resolve<GameClearService>().PlayGameClearAnimationAsync();
+            await ServiceLocator.Resolve<GameClearService>().PlayGameClearAnimationAsync(onGameClearEvent.StageData.StageDataList[onGameClearEvent.StageData.CurrentStageIndex.Value].LimitTime.Value, onGameClearEvent.TimerData.CurrentTime.Value);
 
             // 累積クリア時間を更新
             int clearTime = (int)(onGameClearEvent.StageData.StageDataList[onGameClearEvent.StageData.CurrentStageIndex.Value].LimitTime.Value - onGameClearEvent.TimerData.CurrentTime.Value);

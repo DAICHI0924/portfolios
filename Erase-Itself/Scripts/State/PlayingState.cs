@@ -12,26 +12,39 @@ namespace Kakky
         {
             base.OnEnter(context); //親クラスの関数を実行する
             GameEventBus.RaisePlaying();
-            context
-                .GameOverData.OnGameOver.Subscribe(_ =>
-                {
-                    InGameStateMachine.Instance.ChangeState(InGameState.GameOver);
-                })
-                .AddTo(_disposables);
 
+            // ゲームオーバーの検知
+            // context
+            //     .GameOverData.OnGameOver.Subscribe(_ =>
+            //     {
+            //         InGameStateMachine.Instance.ChangeState(InGameState.GameOver);
+            //     })
+            //     .AddTo(_disposables);
             context
-                .TimerData.OnTimerStopped
-                .Where(value => value == true)
+                .PlayerParamData.Strength.Where(value => value <= 0f)
                 .Subscribe(_ =>
                 {
                     InGameStateMachine.Instance.ChangeState(InGameState.GameOver);
                 })
                 .AddTo(_disposables);
 
-                context.PlayerParamData.RemainAmount.Where(value => value <= 0f).Subscribe(_ =>
+            // ゲームオーバーの検知
+            context
+                .TimerData.OnTimerStopped.Where(value => value == true)
+                .Subscribe(_ =>
+                {
+                    InGameStateMachine.Instance.ChangeState(InGameState.GameOver);
+                })
+                .AddTo(_disposables);
+
+            // ゲームクリアの検知
+            context
+                .PlayerParamData.RemainAmount.Where(value => value <= 0f)
+                .Subscribe(_ =>
                 {
                     InGameStateMachine.Instance.ChangeState(InGameState.GameClear);
-                }).AddTo(_disposables);
+                })
+                .AddTo(_disposables);
         }
 
         public override void OnUpdate(GameDataContext context)
