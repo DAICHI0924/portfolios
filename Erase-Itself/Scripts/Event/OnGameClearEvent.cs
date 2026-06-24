@@ -7,11 +7,15 @@ namespace Kakky
         public StageDataBase StageData;
         public TimerData TimerData;
         public SumClearTimeData SumClearTimeData;
-        public OnGameClearEvent(StageDataBase stageData, TimerData timerData, SumClearTimeData sumClearTimeData)
+
+        public PlayerParamData PlayerParamData;
+
+        public OnGameClearEvent(StageDataBase stageData, TimerData timerData, SumClearTimeData sumClearTimeData, PlayerParamData playerParamData)
         {
             StageData = stageData;
             TimerData = timerData;
             SumClearTimeData = sumClearTimeData;
+            PlayerParamData = playerParamData;
         }
     }
 }

@@ -16,10 +16,10 @@ namespace Kakky
         {
             ServiceLocator.Resolve<ITimerService>().StopTimer();
             ServiceLocator.Resolve<ICameraService>().ChangeCameraToGameClear();
-            await ServiceLocator.Resolve<GameClearService>().PlayGameClearAnimationAsync(onGameClearEvent.StageData.StageDataList[onGameClearEvent.StageData.CurrentStageIndex.Value].LimitTime.Value, onGameClearEvent.TimerData.CurrentTime.Value);
+            await ServiceLocator.Resolve<GameClearService>().PlayGameClearAnimationAsync(onGameClearEvent.StageData.StageDataList[onGameClearEvent.StageData.CurrentStageIndex.Value].LimitTime.Value, onGameClearEvent.TimerData.CurrentTime.Value, onGameClearEvent.PlayerParamData.Strength.Value);
 
             // 累積クリア時間を更新
-            int clearTime = (int)(onGameClearEvent.StageData.StageDataList[onGameClearEvent.StageData.CurrentStageIndex.Value].LimitTime.Value - onGameClearEvent.TimerData.CurrentTime.Value);
+            int clearTime = (int)(onGameClearEvent.StageData.StageDataList[onGameClearEvent.StageData.CurrentStageIndex.Value].LimitTime.Value - onGameClearEvent.TimerData.CurrentTime.Value - 10f * onGameClearEvent.PlayerParamData.Strength.Value);
             onGameClearEvent.SumClearTimeData.AddClearTime(clearTime);
 
             // 全ステージクリア済みの場合、Thanks画面を表示する

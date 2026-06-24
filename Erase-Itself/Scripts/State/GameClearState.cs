@@ -14,7 +14,7 @@ namespace Kakky
         public override async void OnEnter(GameDataContext context)
         {
             base.OnEnter(context); //親クラスの関数を実行する
-            GameEventBus.RaiseGameClear(new OnGameClearEvent(context.StageDataBase, context.TimerData, context.SumClearTimeData));
+            GameEventBus.RaiseGameClear(new OnGameClearEvent(context.StageDataBase, context.TimerData, context.SumClearTimeData, context.PlayerParamData));
             context.StageDataBase.CurrentStageIndex.Skip(1).Subscribe(index =>
             {
                 var nextStageSceneName = context.StageData.NextStageSceneName;
